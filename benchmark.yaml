@@ -1,0 +1,48 @@
+---
+
+concurrency: 12
+base: 'http://localhost:8080'
+iterations: 2000
+rampup: 4
+
+plan:
+  - name: Fetch users
+    request:
+      url: /users
+
+  - name: Say hello
+    request:
+      url: /
+
+  - name: bad request
+    request:
+      url: /bad
+
+  - name: POST user
+    request:
+      url: /users
+      method: POST
+      body: '{"age":36,"name":"Cathy"}'
+      headers:
+        Content-Type: 'application/json'
+
+  - name: Waiting some seconds
+    delay:
+      seconds: 0
+
+  - name: POST user
+    request:
+      url: /users
+      method: POST
+      body: '{"age":30,"name":"Cato"}'
+      headers:
+        Content-Type: 'application/json'
+
+  - name: POST user
+    request:
+      url: /users
+      method: POST
+      body: '{"age":3,"name":"Roro"}'
+      headers:
+        Content-Type: 'application/json'
+

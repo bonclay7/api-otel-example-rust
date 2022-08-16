@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: api-otel-example
+spec:
+  containers:
+    - image: 339743103717.dkr.ecr.eu-central-1.amazonaws.com/api-otel-example:latest
+      name: api-otel-example
+      livenessProbe:
+        httpGet:
+          path: /hey
+          port: 8080
+        initialDelaySeconds: 5
+        timeoutSeconds: 1
+        periodSeconds: 10
+        failureThreshold: 3
+      ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
